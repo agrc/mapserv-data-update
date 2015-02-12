@@ -1,0 +1,4 @@
+from .prod import *
+
+AGS_USERNAME = '<username>'
+AGS_PASSWORD = '<password>'

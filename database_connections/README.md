@@ -1,0 +1,1 @@
+This is where you put `.sde` connections that are named the same as their associated file geodatabases (e.g. `SGID10.sde`).
