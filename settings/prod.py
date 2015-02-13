@@ -1,5 +1,5 @@
 DBPATH = r"\\ITAS104SP\ArcGISServer\data"
-DATABASES = ["SGID10", "UDES"]
+DATABASES = ["SGID10", "UDES", "FiberVerification"]
 NOTIFICATION_EMAILS = ['stdavis@utah.gov']
 SEND_EMAILS = True
 LOCATORS_FGDB = r'\\172.16.17.53\ArcGISServer\locators\Locators.gdb'
