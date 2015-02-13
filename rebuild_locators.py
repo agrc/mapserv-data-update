@@ -6,11 +6,12 @@ import settings
 import os
 
 
+BASE_FGDB = '{}\{}'.format(settings.DBPATH, 'SGID10.gdb')
 locatorRoads = r'{}\Roads'.format(settings.LOCATORS_FGDB)
 locatorAddressPoints = r'{}\AddressPoints'.format(settings.LOCATORS_FGDB)
 
-baseRoads = r'{}\Roads'.format(settings.BASE_FGDB)
-baseAddressPoints = r'{}\AddressPoints'.format(settings.BASE_FGDB)
+baseRoads = r'{}\Roads'.format(BASE_FGDB)
+baseAddressPoints = r'{}\AddressPoints'.format(BASE_FGDB)
 
 
 sddraftsFolder = r'{}\sddrafts'.format(os.getcwd())

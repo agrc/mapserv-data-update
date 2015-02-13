@@ -2,3 +2,6 @@ from .prod import *
 
 AGS_USERNAME = '<username>'
 AGS_PASSWORD = '<password>'
+AGS_IP = '<ip address of arcgis server with locators on it>'
+LOCATORS_FGDB = '<path to gdb with locators>'
+DBPATH = '<path to folder containing file geodatabases>'
