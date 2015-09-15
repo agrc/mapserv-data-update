@@ -10,6 +10,7 @@ from datetime import timedelta
 import rebuild_locators
 import settings
 import os
+import re
 
 
 class Runner():
@@ -66,20 +67,22 @@ class Runner():
         self.logger.logMsg("total minutes: " + str(elapsed_time / 60))
 
         if len(errors) > 0:
+            errors = '\n\n'.join(errors)
+            errors = re.sub('(\n\n|^)(.*): schema change detected',
+                            r'\1\2: schema change detected - force update: http://172.16.17.56/arcgis/rest/services/ForceSchemaUpdate/GPServer/Force%20Schema%20Update/execute?Feature_Class_Name=\2&f=json',
+                            errors)
             txt = "Updated Datasets: \n{}\n\nUpdate Errors:\n{}\n\nLog:\n{}"
             self.emailer.sendEmail(
-                self.logger.scriptName + " - Update Errors",
+                'mapserv-data-update: update errors',
                 txt.format("\n".join(update.changes),
-                           "\n\n".join(errors),
+                           errors,
                            self.logger.log))
         else:
             txt = "Updated Datasets: \n{}\n\nLog:\n{}"
             self.emailer.sendEmail(
-                self.logger.scriptName + " - Success",
+                "mapserv-data-update: success",
                 txt.format('\n'.join(update.changes),
                            self.logger.log))
-
-        self.logger.writeLogToFile()
 
         print("done")
 
@@ -111,8 +114,15 @@ class Runner():
         archivePath = '{}\{}_{}.gdb'.format(
             archiveFolder, db, str(date.today()))
         self.logger.logMsg('Copying {}'.format(archivePath))
-        arcpy.Copy_management(r'{}\{}.gdb'.format(settings.DBPATH, db),
-                              archivePath)
+        # try/except is to work around a bug that is present in 10.2.2 that
+        # throws errors when copying to network locations even though it successfully
+        # copies. This was happening with the FiberVerification database.
+        # Try again at 10.3
+        try:
+            arcpy.Copy_management(r'{}\{}.gdb'.format(settings.DBPATH, db),
+                                  archivePath)
+        except:
+            pass
 
 if __name__ == "__main__":
     Runner().runWithTryCatch()
