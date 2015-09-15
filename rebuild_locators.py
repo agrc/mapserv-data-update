@@ -63,10 +63,10 @@ class Runner():
             arcpy.Delete_management(sddraftFile)
 
         # delete existing locator service
-        # service = r'Geolocators/' + locator
-        # serviceType = 'GeocodeServer'
-        # self.logger.logMsg('deleting existing service')
-        # self.agsAdmin.deleteService(service, serviceType)
+        service = r'Geolocators/' + locator
+        serviceType = 'GeocodeServer'
+        self.logger.logMsg('deleting existing service')
+        self.agsAdmin.deleteService(service, serviceType)
 
         # need to make a copy of the .sddraft file
         # since StateService deletes it
@@ -86,8 +86,7 @@ class Runner():
             raise '{} was not restarted successfully!'.format(service)
 
     def sendSuccessEmail(self, fc):
-        body = ('The {} feature class was updated and all ',
-                'associated locators were rebuilt.').format(fc)
+        body = 'The {} feature class was updated and all associated locators were rebuilt.'.format(fc)
         self.emailer.sendEmail('{}-related locators were rebuilt'.format(fc),
                                body)
 
