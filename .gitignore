@@ -62,3 +62,5 @@ settings/__init__.py
 .idea/
 *.sddraft
 *.sublime-workspace
+agrc*
+requests*
